@@ -1,18 +1,18 @@
 const express = require("express");
-const macipRouter = require("./routes/macAddress");
 const app = express();
+const getmac = require("getmac");
+
 const port = process.env.PORT || 4040;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use("/", (req, res) => {
+  const device = getmac.default();
+  console.log(device);
 
-app.use("/" , (req , res) => {
-  res.send("Hello World")
-
-})
-
-app.use("/macip" , macipRouter)
+  res.send(`Hello World + ${device}`);
+});
 
 app.listen(port, () => {
   console.log(`server is running at http://localhost:${port}`);
